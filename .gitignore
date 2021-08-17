@@ -1,0 +1,7 @@
+# Matlab/Simulink Backup File Types and Folders
+slprj/
+*.asv
+*.slxc
+*.autosave
+*.original
+*.slx.c
