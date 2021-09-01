@@ -6,7 +6,7 @@ Ts_model = 0;                                                                   
 order = [size(output,2) size(input,2) Nx];                                      % [Ny Nu Nx] order
 
 %p = [0.01, 2, 0.1];
-p = [0.0949   15.2717   0.5  0.08];
+p = [0.0359   10   0.5  0.07];
 
 params = [p, Nx];
 
