@@ -5,3 +5,7 @@ slprj/
 *.autosave
 *.original
 *.slx.c
+# Code sys "extras"
+*.opt
+*.LocalDevice.*
+*.~u
