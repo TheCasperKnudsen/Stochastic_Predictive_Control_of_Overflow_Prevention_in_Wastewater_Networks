@@ -23,7 +23,7 @@ Q_v(2,:) = hampel(smooth(labRes.Data(startData:end-1,6)),14);
 Q_v(3,:) = uConv(labRes.Data(startData:end-1,12),'mTos');     
 
 %% ============================================ Idata object ================================================ 
-T_down = 4;%2;
+T_down = 10;%4;%2;
 Ts_data = T_down*0.5;                                                                    % [10min] in simulation/control 
 
 % training Idata
@@ -50,7 +50,9 @@ order = [size(output,2) size(input,2) Nx];                                      
 
 %/p = [0.0349   9.2717   0.25  0.05]; %working
 %p = [0.0349   15.2717   0.5  0.08];   %working
- p = [0.0949   15.2717   0.5  0.08];
+% p = [0.0949   15.2717   0.5  0.08];
+%p = [0.0459   30   2  0.05];
+p = [0.0359   10   0.5  0.07];
 params = [p, Nx];
 
 initStates = 0.0001*ones(Nx, 1);                                                % assume 0 flow at t0
@@ -66,7 +68,7 @@ sys_init.Parameters(end).Fixed = true;                                          
 
 sys_init.SimulationOptions.AbsTol = 1e-10;
 sys_init.SimulationOptions.RelTol = 1e-8;
-sys_init.SimulationOptions.Solver = 'ode4';                                     % 4th order Runge-Kutte solver - fixed-step size             
+sys_init.SimulationOptions.Solver = 'ode4';                                     % 4th order Runge-Kutte solver - fixed-step size  (ode4)           
 
 sys_init.Parameters(1).Minimum = 0.001;     %sys_init.Parameters(1).Maximum = 0.5;   % parameter constraints
 sys_init.Parameters(2).Minimum = 0.001;     %sys_init.Parameters(2).Maximum = 10000;
@@ -86,7 +88,7 @@ opt = nlgreyestOptions;
 opt.SearchMethod = 'gna'; 
 opt.Display = 'on';
 opt.SearchOption.MaxIter = 100;
-opt.SearchOption.Tolerance = 1e-15; 
+%opt.SearchOption.Tolerance = 1e-15; 
 
 %% =============================================== Estimation =============================================
 tic 
