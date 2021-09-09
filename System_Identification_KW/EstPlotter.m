@@ -1,4 +1,3 @@
-
 %% Initial system comparison
 
 plotEnbaler = 1;
@@ -52,7 +51,6 @@ end
 end
 %xlabel('Time [s]','interpreter','latex');
 end
-
 
 % Estimated outlet flow comparison
 % Calculate outlet flow with estimated parameters

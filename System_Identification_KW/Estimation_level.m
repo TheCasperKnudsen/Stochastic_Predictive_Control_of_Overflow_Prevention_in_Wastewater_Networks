@@ -111,24 +111,5 @@ EstPlotter;
 
 %%
  P_pipe_min_v2 = estParams;
-% save('.\parameters\P_pipe_min_v2','P_pipe_min_v2');
-
-%%
-% saveEnabler = 0;
-% if saveEnabler == 1
-%     switch Nx_meas
-%         case 4
-%             p_grav_Nx4 = estParams;
-%             save('data\p_grav_Nx4','p_grav_Nx4')
-%         case 6
-%             p_grav_Nx6 = estParams;
-%             save('data\p_grav_Nx6','p_grav_Nx6')
-%     end 
-% end
-
-
-
-            
-            
-            
+% save('.\parameters\P_pipe_min_v2','P_pipe_min_v2');         
             

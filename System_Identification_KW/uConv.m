@@ -27,9 +27,9 @@ try
         y = 300.*u;
     case '5mTos'
         y = (1/300).*u;
-        case 'mTos'
+    case 'mTos'
             y = (1/60).*u;
-                    case 'none'
+    case 'none'
             y = u;
     end 
 catch 
