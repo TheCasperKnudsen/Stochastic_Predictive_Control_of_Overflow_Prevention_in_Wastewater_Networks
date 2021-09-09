@@ -1,7 +1,6 @@
 clearvars, clc, clear path
 
-N = 5000;%2*2600;%2600;                                                                          % length of simulation (dependent on the length of disturbance data)
-
+N = 5000;%2*2600;%2600;                                                                  % length of simulation (dependent on the length of disturbance data)
 controlType = 2;                                                                         % switch between on/off and MPC
 
 %% ============================================ Control setup ======================================
@@ -17,7 +16,7 @@ end
 %% =====================================  Initial conditions  ======================================
 X_sim(1,1) = 3.3;%x(1,1);                                                                 % init. tank1 state [m^3]
 X_sim(2,1) = 3.8;%x(2,1);                                                                 % init. tank2 state [m^3]                                                                     % warm start - Lagrange multiplier initializer
-X_sim(Nxt+1:Nxt+Nxp,1) = 0.001;%x(Nxt+1:Nxt+Nxp,1);                                       % init. pipe states [m]
+X_sim(Nxt+1:Nxt+Nxp,1) = 0.001;                                                           % init. pipe states [m]
 dt_sim = 0.5*t_resample/60;                                                               % sampling time [s]       
 
 lam_g = 0;                                                                                % warm start - Lagrange multiplier initializer
@@ -51,7 +50,6 @@ if PlotType == 2
 end
 
 %% ==============================================  Simulate  ======================================
-
 disp('Simulator running')
 tic
 
@@ -83,25 +81,3 @@ toc
 
 %% Static plots
   plotResults;      
-
-
-
-%% Save for GP training
-
-%  x = X_sim(:,1:end-1);
-%  u = U_opt;
-%  d = D_sim(:,1:t_resample:size(U_opt,2)*t_resample);
-% % 
-% save('x','x')
-% save('u','u')
-% save('d','d')
-
-%% Save for GP validation
-
-% x_retrain2 = X_sim(:,1:end-1);
-% u_retrain2 = U_opt;
-% d_retrain2 = D_sim(:,1:t_resample:size(U_opt,2)*t_resample);
-% % % % 
-% save('x_retrain2','x_retrain2')
-% save('u_retrain2','u_retrain2')
-% save('d_retrain2','d_retrain2')
