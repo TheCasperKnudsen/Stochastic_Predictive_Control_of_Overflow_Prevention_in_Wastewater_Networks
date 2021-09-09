@@ -11,7 +11,9 @@ Todo simulation:
 
 Todo control:
 Disturbance generation 
-
+CC-MPC
+MM-MPC
+D-MPC
 
 Story: 
 1. Complexity analysis -> report on avg. CPU time
