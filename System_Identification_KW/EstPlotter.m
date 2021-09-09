@@ -14,9 +14,7 @@ set(leg, 'Interpreter', 'latex');
 end
 linkaxes(ax, 'x')
 
-% Initial outlet flow comparison
 % Calculate outlet flow with initial parameters
-%Qout_init = params(2) *  g(y_init.OutputData(:,Nx_meas),params(3));
 Qout_init = y_init.OutputData(:,Nx_meas+1);
 
 figure
@@ -52,9 +50,7 @@ end
 %xlabel('Time [s]','interpreter','latex');
 end
 
-% Estimated outlet flow comparison
 % Calculate outlet flow with estimated parameters
-%Qout_est = estParams(2) *  g(y_final.OutputData(:,Nx),estParams(3));
 Qout_est = y_final.OutputData(:,Nx_meas+1);
 
 ax(Nx_meas+1) = subplot(size(output,2),1,Nx_meas+1);

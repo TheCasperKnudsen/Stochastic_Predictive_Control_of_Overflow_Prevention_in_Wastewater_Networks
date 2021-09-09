@@ -26,12 +26,12 @@ labRes.Data(1:end-1,6) = (2/10^6)*labRes.Data(1,10)*(labRes.Data(2:end,7) - labR
 startData = 2;                                                                  % the first data point is corrupted
 t_resample = 20;                                                                % Resample raw data
 endData = size(labRes.Data,1);
-% state
+% state [tank1, tank2, pipe1, pipe2, pipe3, pipe4]
 x(1,:) = labRes.Data(startData:t_resample:endData-1,1)'/100;                    % [dm]
 x(2,:) = labRes.Data(startData:t_resample:endData-1,7)'/100;                    % [dm]
 x(3:6,:) = medfilt1(labRes.Data(startData:t_resample:endData-1,2:2+4-1)'/100,3);% [dm]
 
-% input
+% input [station1, station2]
 u(1,:) = uConv(labRes.Data(startData:t_resample:endData-1,8),'none');           % [dm^3/s]
 u(2,:) = uConv(labRes.Data(startData:t_resample:endData-1,9),'none');           % [dm^3/s]
 
@@ -47,7 +47,7 @@ y = y_temp(1:t_resample:endData);
 conv_mm2Todm2 = 10^-4;
 Kt = labRes.Data(1,10)*conv_mm2Todm2;
 
-%% PLot test
+%% Plot test
 plotEnable = 0;
 if plotEnable == 1
 figure
@@ -56,7 +56,6 @@ plot(x(1:2,:)','LineWidth',0.5)
 ylabel('Water level','interpreter','latex');
 xlabel('Time','interpreter','latex');
 title('Tank states','interpreter','latex')
-
 subplot(2,1,2)
 plot(x(3:6,:)','LineWidth',0.5)
 ylabel('Water level','interpreter','latex');
