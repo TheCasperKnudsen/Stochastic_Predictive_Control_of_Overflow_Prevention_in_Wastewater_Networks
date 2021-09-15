@@ -14,9 +14,9 @@ Q(2,:) = y(startData:endData_sysID,1)';
 Q(3,:) = d(3,startData:endData_sysID);      
 
 %% ============================================ Idata object ================================================ 
-unitConv = 60;
+unitConv = 60;          % this is not necessary on real data
 T_original = 0.5;
-Ts_data = T_original*t_resample/unitConv;                                                                    % [10min] in simulation/control 
+Ts_data = T_original*t_resample/unitConv;                                       % [10min] in simulation/control 
 
 input = [Q(1,:); Q(3,:)]';
 output = [h(1:end,:); Q(2,:)]';
@@ -35,15 +35,11 @@ hold on
 plot(output(:,end))
 
 %% ===================================================== Model ============================================
-
 modelName = 'model_cont';
 Ts_model = 0;                                                                   % 0 - continuous model, 1,2,.. - discrete model 
 order = [size(output,2) size(input,2) Nx];                                 % [Ny Nu Nx] order
 
-
-%p = [0.09925   50.9288   10.7652];             % for [dm^3/s] flow units 
 p = [0.01925   1000   10];             % for [dm^3/min] flow units 
-
 
 params = [p, Nx];
 
@@ -72,9 +68,9 @@ end
 
 sys_init = setinit(sys_init, 'Fixed', false(Nx,1));
 
+% % For testing init. parameters
 % opt_init = simOptions('InitialCondition',initStates);                           % Simulate model on training data with initial parameters
 % y_init = sim(sys_init,data,opt_init);
-% 
 % EstPlotter;
 
 %% ============================================= Solver options ============================================
@@ -102,7 +98,7 @@ toc
 %% ========================================== Estimated model ============================================
 opt_init = simOptions('InitialCondition',initStates);                           % Simulate model on training data with initial parameters
 y_init = sim(sys_init,data,opt_init);
-%%
+
 opt_final = simOptions('InitialCondition',finalStates);                         % Simulate model on training data with estimated parameters
 y_final = sim(sys_final,data,opt_final);
 
@@ -110,25 +106,6 @@ y_final = sim(sys_final,data,opt_final);
 EstPlotter;
 
 %%
- P_pipe_min_v2 = estParams;
-% save('.\parameters\P_pipe_min_v2','P_pipe_min_v2');
-
-%%
-% saveEnabler = 0;
-% if saveEnabler == 1
-%     switch Nx_meas
-%         case 4
-%             p_grav_Nx4 = estParams;
-%             save('data\p_grav_Nx4','p_grav_Nx4')
-%         case 6
-%             p_grav_Nx6 = estParams;
-%             save('data\p_grav_Nx6','p_grav_Nx6')
-%     end 
-% end
-
-
-
-            
-            
-            
+P_pipe_min_v2 = estParams;
+% save('.\parameters\P_pipe_min_v2','P_pipe_min_v2');         
             
