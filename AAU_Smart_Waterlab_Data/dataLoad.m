@@ -11,11 +11,13 @@
 % 12    : lateral inflow (disturbance)
 % 13    : inflow to tank1 
 % 14:17 : [pump1_ref(inflow), pump2_ref(outflow), inflow to tank1_ref, lateral inflow_ref]
+% 18:19 : external tank1 and tank2 levels
+% 20:21 : buffer tank levels
 % """
 
 addpath('data');
 
-load('.\data\Experiment_data_deterministic_MPC_full_KW_13_09_2021');
+load('.\data\Experiment_data_deterministic_MPC_full_KW_13_09_2021_15h');
 
 labRes = ans;
 
