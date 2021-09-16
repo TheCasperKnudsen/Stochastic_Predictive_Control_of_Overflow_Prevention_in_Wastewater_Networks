@@ -17,7 +17,7 @@
 
 addpath('data');
 
-load('.\data\Experiment_data_deterministic_MPC_full_KW_13_09_2021_15h');
+load('.\data\onoff_results');
 
 labRes = ans;
 
