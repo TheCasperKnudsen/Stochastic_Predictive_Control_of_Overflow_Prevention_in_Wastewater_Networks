@@ -1,13 +1,14 @@
 Todo Lab:
-1. Level sensors
-2. Refill system
-3. Check PIs & document ranges
-4. Balance volumes
-5. Design & Run On/off data collection - 12 hours
+1. x Level sensors
+2. x Refill system
+3. x Check PIs & document ranges
+4. x Balance volumes
+5. x Design & Run On/off data collection - 12 hours
 
 Todo simulation: 
 1. Do system identification on KW
 2. Use parameters to setup simulator
+3. Get linear KW model
 
 Todo control:
 Disturbance generation 
