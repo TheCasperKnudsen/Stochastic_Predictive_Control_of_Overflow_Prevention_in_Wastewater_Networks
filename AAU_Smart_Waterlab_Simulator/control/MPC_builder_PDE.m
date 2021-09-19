@@ -38,7 +38,7 @@ Y     = P(2)*g(X(Nxt+ Nxp,:),P(3));
 %objective = sumsqr(U) + 10000*sumsqr(S) + 100*(Kt/dt_MPC)*sumsqr(X(1:Nxt,2:end) - X_ref); %+ 1*sumsqr(X(1:Nxt,:)); %+ sumsqr(X(1:Nxt,:) - X_ref); %+ sumsqr(S);                          
 
 % overflow prevention
-objective = 0.001*sumsqr(U(2,:)) + 1*sumsqr(U(1,:)) + 10000*sumsqr(S) + 5*(Kt/dt_MPC)*sumsqr(X(1:Nxt,2:end) - X_ref); %+ 1*sumsqr(X(1:Nxt,:)); %+ sumsqr(X(1:Nxt,:) - X_ref); %+ sumsqr(S);                          
+objective = 0.001*sumsqr(U(2,:)) + 1*sumsqr(U(1,:)) + 10000*sumsqr(S) + 5*(Kt/dt_MPC)*sumsqr(X(1:Nxt,2:end) - X_ref); 
 
 opti.minimize(objective); 
 
@@ -94,7 +94,7 @@ opts = struct;
 %opts.ipopt.print_level = 0;                                                     % print enabler to command line
 opts.print_time = false;
 opts.expand = true;                                                             % makes function evaluations faster
-opts.ipopt.max_iter = 300;                                                      % max solver iteration
+opts.ipopt.max_iter = 100;                                                      % max solver iteration
 opti.solver('ipopt',opts);                                                      % solver: ipopt(default)
 
 %  opts.qpsol = 'qrqp';

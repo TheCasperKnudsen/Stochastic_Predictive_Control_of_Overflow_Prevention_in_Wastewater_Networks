@@ -28,6 +28,8 @@ elseif intMethod == 2
     F_integral_sim = casadi.Function('F_EUL', {x_sym, u_sym, d_sym, p_sym, dt_sym}, {xf}, {'x[k]','u[k]','d[k]','p','dt'},{'x[k+1]'});
 end
 
+disp('Simulator builder: OK.')
+
 %%
 function y = g(z,p3)    
     y = ((z).^(5/3)) ./ (((z) + p3).^(2/3));        

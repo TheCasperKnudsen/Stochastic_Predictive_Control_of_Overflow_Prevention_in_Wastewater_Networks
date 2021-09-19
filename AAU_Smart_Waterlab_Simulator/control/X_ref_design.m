@@ -21,9 +21,9 @@ for i = 1:size(ref_length,2)
 end
 
 % original
-%X_ref_sim = resample([X_ref_t1; X_ref_t2]',4,1)';%[X_ref_t1; X_ref_t2]; 
+X_ref_sim = resample([X_ref_t1; X_ref_t2]',4,1)';%[X_ref_t1; X_ref_t2]; 
 % modified
-X_ref_sim = resample([2.*ones(1,2000), 6.*ones(1,2000), 2.*ones(1,2000), 6.*ones(1,2000), 2.*ones(1,1000), 6.*ones(1,1000), X_ref_t1 , X_ref_t2 , X_ref_t1 , X_ref_t2 ; 2.*ones(1,2000), 6.*ones(1,2000), 2.*ones(1,2000), 6.*ones(1,2000), 2.*ones(1,1000), 6.*ones(1,1000), X_ref_t2 , X_ref_t2, X_ref_t2, X_ref_t2]',1,1)';
+%X_ref_sim = resample([2.*ones(1,2000), 6.*ones(1,2000), 2.*ones(1,2000), 6.*ones(1,2000), 2.*ones(1,1000), 6.*ones(1,1000), X_ref_t1 , X_ref_t2 , X_ref_t1 , X_ref_t2 ; 2.*ones(1,2000), 6.*ones(1,2000), 2.*ones(1,2000), 6.*ones(1,2000), 2.*ones(1,1000), 6.*ones(1,1000), X_ref_t2 , X_ref_t2, X_ref_t2, X_ref_t2]',1,1)';
 
 
 X_ref_sim(1,:) = X_ref_sim(1,:)*1.2-0.3;

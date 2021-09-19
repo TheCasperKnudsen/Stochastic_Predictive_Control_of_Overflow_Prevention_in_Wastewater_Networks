@@ -1,6 +1,6 @@
 clearvars, clc, clear path
 
-N = 5000;%2*2600;%2600;                                                                  % length of simulation (dependent on the length of disturbance data)
+N = 12000;%2*2600;%2600;                                                                  % length of simulation (dependent on the length of disturbance data)
 controlType = 2;                                                                         % switch between on/off and MPC
 
 %% ============================================ Control setup ======================================
