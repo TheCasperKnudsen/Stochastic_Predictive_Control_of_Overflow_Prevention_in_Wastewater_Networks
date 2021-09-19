@@ -17,7 +17,7 @@
 
 
 %load('.\data\Experiment_data_deterministic_MPC_full_KW');
-load('.\data\Experiment_data_deterministic_MPC_5_10_u18_5');
+load('.\data\onoff_results');
 %load('Lab_simulator\Simulator\data\Simulation_data_WWdata_v2');
 
 labRes = ans;
@@ -52,7 +52,7 @@ Kt = labRes.Data(1,10)*conv_mm2Todm2;
 %plot(y)
 
 %% 
-plotEnable = 1;
+plotEnable = 0;
 if plotEnable == 1
 figure
 subplot(2,1,1)

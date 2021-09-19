@@ -2,6 +2,7 @@
 % """
 % Builds optimization problem
 % """
+addpath(genpath('.\Stochastic_Predictive_Control_of_Overflow_Prevention_in_Wastewater_Networks\CasAdi'))
 import casadi.*
 opti = casadi.Opti();                                       % Optimization problem
 %opti = casadi.Opti('conic');                                       % Optimization problem
