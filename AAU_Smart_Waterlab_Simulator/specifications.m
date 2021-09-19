@@ -15,11 +15,10 @@ Nxt = 2;                            % number of tank states
 Nxp = 4;                            % number of channel states 
 Nx = Nxt + Nxp;                     % all states
 Nu = 2;                             % number of inputs
-NP = 3 + 2;                         % number of channel parameters 
+NP = 3 + 2;                         % number of channel parameters  + number of tank parameters
 ND = 3;                             % number of disturbances
 
-load('parameters\P_pipe_min')       % load Gravity pipe parameters
-load('parameters\P_pipe_min_v2')    % load Gravity pipe parameters
+load('parameters\P_pipe')           % load Gravity pipe parameters
 load('parameters\Kt')               % load tank parameters
 t_resample = 20;                    % Resample raw data - conversion between simulator/MPC time steps
 if controlType == 1
