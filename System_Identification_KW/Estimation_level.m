@@ -4,7 +4,8 @@ clc;
 %% ================================================ Prepare data ==============================================
 dataLoad;                                                                       % Load simulation data 
 
-endData_sysID = 800;%1500;%size(x,2)-startData;      % 1999
+%%
+endData_sysID = 2000;%size(x,2)-startData;      % 1999
 Nx = 4;
 Nx_meas = 4;   
 
@@ -39,14 +40,15 @@ modelName = 'model_cont';
 Ts_model = 0;                                                                   % 0 - continuous model, 1,2,.. - discrete model 
 order = [size(output,2) size(input,2) Nx];                                 % [Ny Nu Nx] order
 
-p = [0.01925   1000   10];             % for [dm^3/min] flow units 
+%p = [0.01925   1000   10];             % for [dm^3/min] flow units 
+p = [0.1   200   1];
 
 params = [p, Nx];
 
 initStates = 0.0001*ones(Nx, 1);                                                % assume 0 flow at t0
 sys_init = idnlgrey(modelName, order, params, initStates, Ts_model);            % create nlgreyest object
 
-sys_init.TimeUnit = 'seconds';
+sys_init.TimeUnit = 'minutes';
 sys_init.Parameters(1).Name = 'p1';
 sys_init.Parameters(2).Name = 'p2';
 sys_init.Parameters(3).Name = 'p3';
@@ -68,7 +70,7 @@ end
 
 sys_init = setinit(sys_init, 'Fixed', false(Nx,1));
 
-% % For testing init. parameters
+% For testing init. parameters
 % opt_init = simOptions('InitialCondition',initStates);                           % Simulate model on training data with initial parameters
 % y_init = sim(sys_init,data,opt_init);
 % EstPlotter;
@@ -76,10 +78,10 @@ sys_init = setinit(sys_init, 'Fixed', false(Nx,1));
 %% ============================================= Solver options ============================================
 opt = nlgreyestOptions;
 %Search methods: 'gn' | 'gna' | 'lm' | 'grad' | 'lsqnonlin' | 'auto'
-opt.SearchMethod = 'gna'; 
+opt.SearchMethod = 'lsqnonlin'; 
 opt.Display = 'on';
 opt.SearchOption.MaxIter = 100;
-opt.SearchOption.Tolerance = 1e-15; 
+%opt.SearchOption.Tolerance = 1e-15; 
 
 %% =============================================== Estimation =============================================
 tic 
@@ -106,6 +108,6 @@ y_final = sim(sys_final,data,opt_final);
 EstPlotter;
 
 %%
-P_pipe_min_v2 = estParams;
-% save('.\parameters\P_pipe_min_v2','P_pipe_min_v2');         
+P_pipe = estParams;
+save('.\parameters\P_pipe','P_pipe');         
             

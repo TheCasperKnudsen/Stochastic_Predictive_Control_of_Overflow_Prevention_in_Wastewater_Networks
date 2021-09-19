@@ -15,7 +15,7 @@
 
 addpath('data');
 
-load('.\data\Simulation_data_WWdata_v2');
+load('.\data\onoff_results');
 
 labRes = ans;
 
