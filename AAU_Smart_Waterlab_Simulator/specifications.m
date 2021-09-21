@@ -60,4 +60,3 @@ Hp = 20;
 dt_original = 0.5;
 data_timeUnit = 60;
 dt_MPC = dt_original*t_resample/data_timeUnit;
-

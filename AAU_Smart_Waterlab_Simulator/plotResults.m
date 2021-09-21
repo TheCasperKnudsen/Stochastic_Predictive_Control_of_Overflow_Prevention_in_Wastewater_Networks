@@ -87,3 +87,44 @@ for i = 1:Nxp
     title(['Pipe state', num2str(i)],'interpreter','latex')
 end
 end
+
+%% KW vs. Linear comparison
+figure
+subplot(3,2,1)
+plot(X_sim(1,1:end)')
+hold on
+plot(X_sim_lin(3,:))
+hold on
+plot(X_ref_sim(1,1:t_resample:N*t_resample),'black')
+hold on
+plot(max_t1*ones(N,1),'red--')
+hold on
+plot(min_t1*ones(N,1),'red--')
+leg = legend('KW','Linear','Reference');
+set(leg,'Interpreter','latex');
+title('Tank t1 state','interpreter','latex')
+
+subplot(3,2,2)
+plot(X_sim(2,3:end)')
+hold on
+plot(X_sim_lin(2,:))
+hold on
+plot(X_ref_sim(2,1:t_resample:N*t_resample),'black')
+hold on
+plot(max_t2*ones(N,1),'red--')
+hold on
+plot(min_t2*ones(N,1),'red--')
+leg = legend('KW','Linear','Reference');
+set(leg,'Interpreter','latex');
+title('Tank t2 state','interpreter','latex')
+
+for i = Nxt+1:Nxp + Nxt
+subplot(3,2,i)
+plot(X_sim(i,1:end)')
+hold on
+plot(X_sim_lin(i,:))
+leg = legend('KW','Linear');
+set(leg,'Interpreter','latex');
+title('Pipe state','interpreter','latex')
+end
+

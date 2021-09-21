@@ -1,6 +1,6 @@
 clearvars, clc, clear path
 
-N = 12000;%2*2600;%2600;                                                                  % length of simulation (dependent on the length of disturbance data)
+N = 1000;%2*2600;%2600;                                                                  % length of simulation (dependent on the length of disturbance data)
 controlType = 2;                                                                         % switch between on/off and MPC
 
 %% ============================================ Control setup ======================================
@@ -65,6 +65,8 @@ for i = 1:1:N
         U_opt(:,i) = full(U_MPC);
         S_opt(:,i) = full(S_MPC);
     end
+    
+    compute_linear;
  
     % Dynamics simulator
     X_sim(:,i+1) = full(F_integral_sim(X_sim(:,i), U_opt(:,i), D_sim(:,1 + (i-1)*t_resample), P_sim, dt_sim ));
