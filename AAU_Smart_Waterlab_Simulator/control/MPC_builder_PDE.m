@@ -101,7 +101,6 @@ opti.solver('ipopt',opts);                                                      
 %  opts.error_on_fail = 0;
 %  opti.solver('sqpmethod',opts);
  
-
 %opti.solver('superscs',opts)
 
 warmStartEnabler = 1;

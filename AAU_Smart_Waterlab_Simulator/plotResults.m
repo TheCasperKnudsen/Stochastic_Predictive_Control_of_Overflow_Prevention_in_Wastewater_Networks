@@ -93,7 +93,7 @@ figure
 subplot(3,2,1)
 plot(X_sim(1,1:end)')
 hold on
-plot(X_sim_lin(3,:))
+plot(X_sim_lin(1,:))
 hold on
 plot(X_ref_sim(1,1:t_resample:N*t_resample),'black')
 hold on

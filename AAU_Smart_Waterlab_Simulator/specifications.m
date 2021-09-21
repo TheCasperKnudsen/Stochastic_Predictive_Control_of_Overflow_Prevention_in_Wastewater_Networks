@@ -36,7 +36,7 @@ if controlType == 1
     u2_on = 19.6;     
     u2_off = 0;%5;
 elseif controlType == 2 
-    u1_on = 11.2;%8.3;                           
+    u1_on = 11.2;%11.2;%8.3;                           
     u1_off = 4.5;                         
     u2_on = 19.6;%16;%19.5; %10.5;                        
     u2_off = 4.6;                         
@@ -60,3 +60,5 @@ Hp = 20;
 dt_original = 0.5;
 data_timeUnit = 60;
 dt_MPC = dt_original*t_resample/data_timeUnit;
+
+X_sim_lin = zeros(Nxt + Nxp,N);
