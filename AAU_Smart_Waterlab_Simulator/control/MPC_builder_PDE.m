@@ -38,7 +38,7 @@ Y     = P(2)*g(X(Nxt+ Nxp,:),P(3));
 %objective = sumsqr(U) + 10000*sumsqr(S) + 100*(Kt/dt_MPC)*sumsqr(X(1:Nxt,2:end) - X_ref); %+ 1*sumsqr(X(1:Nxt,:)); %+ sumsqr(X(1:Nxt,:) - X_ref); %+ sumsqr(S);                          
 
 % overflow prevention
-objective = 0.001*sumsqr(U(2,:)) + 1*sumsqr(U(1,:)) + 10000*sumsqr(S) + 5*(Kt/dt_MPC)*sumsqr(X(1:Nxt,2:end) - X_ref); 
+objective = 0.01*sumsqr(U(:,:)) + 1000*sumsqr(S) + 10*(Kt/dt_MPC)*sumsqr(X(1:Nxt,2:end) - X_ref); 
 
 opti.minimize(objective); 
 
@@ -91,7 +91,7 @@ end
 %% ====================================== Solver settings ==================================
 % Solver options
 opts = struct;
-%opts.ipopt.print_level = 0;                                                     % print enabler to command line
+%opts.ipopt.print_level = 0;                                                    % print enabler to command line
 opts.print_time = false;
 opts.expand = true;                                                             % makes function evaluations faster
 opts.ipopt.max_iter = 100;                                                      % max solver iteration
@@ -100,14 +100,13 @@ opti.solver('ipopt',opts);                                                      
 %  opts.qpsol = 'qrqp';
 %  opts.error_on_fail = 0;
 %  opti.solver('sqpmethod',opts);
- 
 %opti.solver('superscs',opts)
 
 warmStartEnabler = 1;
 if warmStartEnabler == 1                                                        % Parametrized Open Loop Control problem with WARM START
-    OCP = opti.to_function('OCP',{X0,D,P,X_ref,opti.lam_g,opti.x,DT},{U(:,1),S(:,1),Y(:,1),opti.lam_g,opti.x},{'x0','d','p','x_ref','lam_g','x_init','dt'},{'u_opt','s_opt','y_opt','lam_g','x_init'});
+    OCP = opti.to_function('OCP',{X0,D,P,X_ref,opti.lam_g,opti.x,DT},{X(:,:),U(:,1),S(:,1),Y(:,1),opti.lam_g,opti.x},{'x0','d','p','x_ref','lam_g','x_init','dt'},{'x_opt','u_opt','s_opt','y_opt','lam_g','x_init'});
 elseif warmStartEnabler == 0                                                    % Parametrized Open Loop Control problem without WARM START 
-    OCP = opti.to_function('OCP',{X0,D,P,X_ref,DT},{U(:,1),S(:,1),Y(:,1)},{'x0','d','p','x_ref','dt'},{'u_opt','s_opt','y_opt'});
+    OCP = opti.to_function('OCP',{X0,D,P,X_ref,DT},{X(:,:),U(:,1),S(:,1),Y(:,1)},{'x0','d','p','x_ref','dt'},{'x_opt','u_opt','s_opt','y_opt'});
 end
 
 disp('Casadi builder: OK.')

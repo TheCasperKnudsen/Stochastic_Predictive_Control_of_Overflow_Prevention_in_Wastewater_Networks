@@ -32,17 +32,17 @@ load('D_sim')                                                                   
 % Plot in real time
 PlotType = 2;
 if PlotType == 2
-    U_opt = zeros(2,1);
+    U_opt = zeros(Nu,1);
     
     figure()
     subplot(2,2,1)
     x_plot{1} = plot(X_sim(1,:)');
     hold on
-    plot(X_ref_sim(1,1:20:end))
+    plot(X_ref_sim(1,1:t_resample:end))
     subplot(2,2,2)
     xpl{2} = plot(X_sim(2,:)');
     hold on
-    plot(X_ref_sim(2,1:20:end))
+    plot(X_ref_sim(2,1:t_resample:end))
     subplot(2,2,3)
     upl{1} = plot(U_opt(1,:)');
     subplot(2,2,4)
@@ -60,10 +60,10 @@ for i = 1:1:N
     if controlType == 1
         onoff_control;
     elseif controlType == 2    
-        [U_MPC,S_MPC,Y_MPC,lam_g,x_init] = OCP(X_sim(:,i), D_sim(:,(i)*(t_step)-(t_step-1):t_step:(i-1)*t_step + (Hp)*t_step-(t_step-1)), P_sim, X_ref_sim(:,(i)*(t_step)-(t_step-2):t_step:(i-1)*t_step + (Hp)*t_step-(t_step-2)), lam_g, x_init, dt_sim);
-        %[U_MPC,S_MPC,Y_MPC] = OCP(X_sim(:,i), D_sim(:,(i)*(t_step)-(t_step-1):t_step:(i-1)*t_step + (Hp)*t_step-(t_step-1)), P_sim, X_ref_sim(:,(i)*(t_step)-(t_step-2):t_step:(i-1)*t_step + (Hp)*t_step-(t_step-2)), dt_sim);
+        [X_MPC,U_MPC,S_MPC,Y_MPC,lam_g,x_init] = OCP(X_sim(:,i), D_sim(:,(i)*(t_step)-(t_step-1):t_step:(i-1)*t_step + (Hp)*t_step-(t_step-1)), P_sim, X_ref_sim(:,(i)*(t_step)-(t_step-2):t_step:(i-1)*t_step + (Hp)*t_step-(t_step-2)), lam_g, x_init, dt_sim);
         U_opt(:,i) = full(U_MPC);
         S_opt(:,i) = full(S_MPC);
+        X_opt{i} = full(X_MPC);
     end
     
     compute_linear;
@@ -83,3 +83,17 @@ toc
 
 %% Static plots
   plotResults;      
+  
+%% test predictions
+
+t = 1:Hp+1;
+figure
+for i = 1:1000
+    plot(t,X_opt{i}(2,:))
+    hold on
+    t = t+1;
+end
+
+
+
+
