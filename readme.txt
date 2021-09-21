@@ -6,9 +6,11 @@ Todo Lab:
 5. x Design & Run On/off data collection - 12 hours
 
 Todo simulation: 
-1. Do system identification on KW
-2. Use parameters to setup simulator
-3. Get linear KW model
+1. x Do system identification on KW
+2. x Use parameters to setup simulator
+3. x Get linear KW model
+4. Validate simulator on another dataset
+5. Do a nicer write up of the operating point
 
 Todo control:
 Disturbance generation 
