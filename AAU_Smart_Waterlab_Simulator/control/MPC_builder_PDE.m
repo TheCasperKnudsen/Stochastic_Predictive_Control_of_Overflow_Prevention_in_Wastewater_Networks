@@ -104,9 +104,9 @@ opti.solver('ipopt',opts);                                                      
 
 warmStartEnabler = 1;
 if warmStartEnabler == 1                                                        % Parametrized Open Loop Control problem with WARM START
-    OCP = opti.to_function('OCP',{X0,D,P,X_ref,opti.lam_g,opti.x,DT},{X(:,:),U(:,1),S(:,1),Y(:,1),opti.lam_g,opti.x},{'x0','d','p','x_ref','lam_g','x_init','dt'},{'x_opt','u_opt','s_opt','y_opt','lam_g','x_init'});
+    OCP = opti.to_function('OCP',{X0,D,P,X_ref,opti.lam_g,opti.x,DT},{X(:,:),U(:,:),S(:,1),Y(:,1),opti.lam_g,opti.x},{'x0','d','p','x_ref','lam_g','x_init','dt'},{'x_opt','u_opt','s_opt','y_opt','lam_g','x_init'});
 elseif warmStartEnabler == 0                                                    % Parametrized Open Loop Control problem without WARM START 
-    OCP = opti.to_function('OCP',{X0,D,P,X_ref,DT},{X(:,:),U(:,1),S(:,1),Y(:,1)},{'x0','d','p','x_ref','dt'},{'x_opt','u_opt','s_opt','y_opt'});
+    OCP = opti.to_function('OCP',{X0,D,P,X_ref,DT},{X(:,:),U(:,:),S(:,1),Y(:,1)},{'x0','d','p','x_ref','dt'},{'x_opt','u_opt','s_opt','y_opt'});
 end
 
 disp('Casadi builder: OK.')

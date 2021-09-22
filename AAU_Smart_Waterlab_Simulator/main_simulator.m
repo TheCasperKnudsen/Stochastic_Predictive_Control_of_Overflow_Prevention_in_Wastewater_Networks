@@ -61,7 +61,7 @@ for i = 1:1:N
         onoff_control;
     elseif controlType == 2    
         [X_MPC,U_MPC,S_MPC,Y_MPC,lam_g,x_init] = OCP(X_sim(:,i), D_sim(:,(i)*(t_step)-(t_step-1):t_step:(i-1)*t_step + (Hp)*t_step-(t_step-1)), P_sim, X_ref_sim(:,(i)*(t_step)-(t_step-2):t_step:(i-1)*t_step + (Hp)*t_step-(t_step-2)), lam_g, x_init, dt_sim);
-        U_opt(:,i) = full(U_MPC);
+        U_opt(:,i) = full(U_MPC(:,1));
         S_opt(:,i) = full(S_MPC);
         X_opt{i} = full(X_MPC);
     end
