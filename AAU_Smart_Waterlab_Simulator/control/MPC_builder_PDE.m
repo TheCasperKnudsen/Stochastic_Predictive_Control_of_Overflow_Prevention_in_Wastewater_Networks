@@ -30,10 +30,10 @@ X0    = opti.parameter(Nxt+ Nxp);                           % initial state
 DT    = opti.parameter(1);                                  % MPC model sampling time 
 X_ref = opti.parameter(Nxt,Hp); 
 
-% Linear dynamics
-A     = opti.parameter(Nxt+Nxp,Nxt+Nxp); 
-B     = opti.parameter(Nxt+Nxp,Nu); 
-E     = opti.parameter(Nxt+Nxp,ND);
+% % Linear dynamics
+% A     = opti.parameter(Nxt+Nxp,Nxt+Nxp); 
+% B     = opti.parameter(Nxt+Nxp,Nu); 
+% E     = opti.parameter(Nxt+Nxp,ND);
 
 %% ========================================= Output variables ============================
 Y     = P(2)*g(X(Nxt+ Nxp,:),P(3));
@@ -69,21 +69,6 @@ elseif intMethod == 2
     F_integral = casadi.Function('F_EUL', {x_MPC, u_MPC, d_MPC, p_MPC, dt_MPC}, {xf}, {'x[k]','u[k]','d[k]','p','dt'},{'x[k+1]'});
 end
 
-% Linear dynamics integration
-k1_MPC_lin = dynamics_MPC_linear(x_MPC, u_MPC, d_MPC, A, B, E);
-k2_MPC_lin = dynamics_MPC_linear(x_MPC + dt_MPC / 2.0 * k1_MPC_lin, u_MPC, d_MPC, A, B, E);
-k3_MPC_lin = dynamics_MPC_linear(x_MPC + dt_MPC / 2.0 * k2_MPC_lin, u_MPC, d_MPC, A, B, E);
-k4_MPC_lin = dynamics_MPC_linear(x_MPC + dt_MPC * k3_MPC_lin, u_MPC, d_MPC, A, B, E);
-
-if intMethod == 1
-    xf = x_MPC + dt_MPC / 6.0 * (k1_MPC_lin + 2 * k2_MPC_lin + 2 * k3_MPC_lin + k4_MPC_lin);
-    F_integral_lin = casadi.Function('F_RK4_lin', {x_MPC, u_MPC, d_MPC, A, B, E, dt_MPC}, {xf}, {'x[k]','u[k]','d[k]','A','B','E','dt'},{'x[k+1]'});
-elseif intMethod == 2
-    xf = x_MPC + dt_MPC*dynamics_MPC_linear(x_MPC, u_MPC, d_MPC, A, B, E);
-    F_integral_lin = casadi.Function('F_EUL_lin', {x_MPC, u_MPC, d_MPC, A, B, E, dt_MPC}, {xf}, {'x[k]','u[k]','d[k]','A','B','E','dt'},{'x[k+1]'});
-end
-
-%%
     %% ==================================== Dynamics constraints ===============================
 % Initial state boundary condition - including v0, h0 
 opti.subject_to(X(:,1)==X0);                                                % initial state condition
