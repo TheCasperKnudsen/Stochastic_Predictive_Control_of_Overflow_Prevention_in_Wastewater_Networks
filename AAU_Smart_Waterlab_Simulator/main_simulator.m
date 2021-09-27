@@ -1,6 +1,6 @@
 clearvars, clc, clear path
 
-N = 1000;%2*2600;%2600;                                                                  % length of simulation (dependent on the length of disturbance data)
+N = 300;%2*2600;%2600;                                                                  % length of simulation (dependent on the length of disturbance data)
 controlType = 2;                                                                         % switch between on/off and MPC
 
 %% ============================================ Control setup ======================================
@@ -9,6 +9,7 @@ specifications;
 
 %% ===================================  Build dynamics & optimization  =============================
 simulator_builder;                                                                       % build simulator dynamics
+MPC_builder_linear;
 if controlType == 2
     MPC_builder_PDE;
 end
@@ -60,13 +61,20 @@ for i = 1:1:N
     if controlType == 1
         onoff_control;
     elseif controlType == 2    
+        tic
         [X_MPC,U_MPC,S_MPC,Y_MPC,lam_g,x_init] = OCP(X_sim(:,i), D_sim(:,(i)*(t_step)-(t_step-1):t_step:(i-1)*t_step + (Hp)*t_step-(t_step-1)), P_sim, X_ref_sim(:,(i)*(t_step)-(t_step-2):t_step:(i-1)*t_step + (Hp)*t_step-(t_step-2)), lam_g, x_init, dt_sim);
+        toc
         U_opt(:,i) = full(U_MPC(:,1));
         S_opt(:,i) = full(S_MPC);
         X_opt{i} = full(X_MPC);
     end
     
     compute_linear;
+    
+    % Linear dynamics simulator
+    if i >= 3  
+        X_sim_lin(:,i+1) = full(F_integral_lin(X_sim_lin(:,i), U_opt(:,i), D_sim(:,1 + (i-1)*t_resample), A_cont, B_cont, E_cont, dt_sim ));
+    end
  
     % Dynamics simulator
     X_sim(:,i+1) = full(F_integral_sim(X_sim(:,i), U_opt(:,i), D_sim(:,1 + (i-1)*t_resample), P_sim, dt_sim ));
@@ -88,7 +96,7 @@ toc
 
 t = 1:Hp+1;
 figure
-for i = 1:1000
+for i = 1:N
     plot(t,X_opt{i}(2,:))
     hold on
     t = t+1;

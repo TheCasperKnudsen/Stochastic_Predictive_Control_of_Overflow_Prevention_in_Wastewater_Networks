@@ -30,6 +30,11 @@ X0    = opti.parameter(Nxt+ Nxp);                           % initial state
 DT    = opti.parameter(1);                                  % MPC model sampling time 
 X_ref = opti.parameter(Nxt,Hp); 
 
+% % Linear dynamics
+% A     = opti.parameter(Nxt+Nxp,Nxt+Nxp); 
+% B     = opti.parameter(Nxt+Nxp,Nu); 
+% E     = opti.parameter(Nxt+Nxp,ND);
+
 %% ========================================= Output variables ============================
 Y     = P(2)*g(X(Nxt+ Nxp,:),P(3));
 
@@ -43,7 +48,7 @@ objective = 0.01*sumsqr(U(:,:)) + 1000*sumsqr(S) + 10*(Kt/dt_MPC)*sumsqr(X(1:Nxt
 opti.minimize(objective); 
 
 %% ============================================== Dynamics =====================================
-% Runge-Kutta 4 integration 
+% Nonlinear dynamics integration
 dt_MPC = casadi.MX.sym('dt',1);  
 x_MPC = casadi.MX.sym('x',Nxt+ Nxp);
 u_MPC = casadi.MX.sym('u',Nxt);
@@ -64,7 +69,6 @@ elseif intMethod == 2
     F_integral = casadi.Function('F_EUL', {x_MPC, u_MPC, d_MPC, p_MPC, dt_MPC}, {xf}, {'x[k]','u[k]','d[k]','p','dt'},{'x[k+1]'});
 end
 
-%%
     %% ==================================== Dynamics constraints ===============================
 % Initial state boundary condition - including v0, h0 
 opti.subject_to(X(:,1)==X0);                                                % initial state condition
