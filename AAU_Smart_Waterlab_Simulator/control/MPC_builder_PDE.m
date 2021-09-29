@@ -30,11 +30,6 @@ X0    = opti.parameter(Nxt+ Nxp);                           % initial state
 DT    = opti.parameter(1);                                  % MPC model sampling time 
 X_ref = opti.parameter(Nxt,Hp); 
 
-% % Linear dynamics
-% A     = opti.parameter(Nxt+Nxp,Nxt+Nxp); 
-% B     = opti.parameter(Nxt+Nxp,Nu); 
-% E     = opti.parameter(Nxt+Nxp,ND);
-
 %% ========================================= Output variables ============================
 Y     = P(2)*g(X(Nxt+ Nxp,:),P(3));
 
@@ -52,7 +47,7 @@ opti.minimize(objective);
 dt_MPC = casadi.MX.sym('dt',1);  
 x_MPC = casadi.MX.sym('x',Nxt+ Nxp);
 u_MPC = casadi.MX.sym('u',Nxt);
-d_MPC = casadi.MX.sym('d',ND);                              % [d_t1, d_t2, d_p]
+d_MPC = casadi.MX.sym('d',ND);                                              % [d_t1, d_t2, d_p]
 p_MPC = casadi.MX.sym('p',NP);                    
 %
 k1_MPC = dynamics_MPC(x_MPC, u_MPC, d_MPC, p_MPC);
@@ -69,13 +64,13 @@ elseif intMethod == 2
     F_integral = casadi.Function('F_EUL', {x_MPC, u_MPC, d_MPC, p_MPC, dt_MPC}, {xf}, {'x[k]','u[k]','d[k]','p','dt'},{'x[k+1]'});
 end
 
-    %% ==================================== Dynamics constraints ===============================
+%% ==================================== Dynamics constraints ===============================
 % Initial state boundary condition - including v0, h0 
 opti.subject_to(X(:,1)==X0);                                                % initial state condition
 
 % Gap - closing constraint - from t0 to Hp                                              
 for k=1:Hp                           
-   opti.subject_to(X(:,k+1)==F_integral(X(:,k), U(:,k), D(:,k), P, DT));  
+   opti.subject_to(X(:,k+1) == F_integral(X(:,k), U(:,k), D(:,k), P, DT));  
 end
 
 %% ==================================== Physical constraints ===============================
@@ -113,7 +108,7 @@ elseif warmStartEnabler == 0                                                    
     OCP = opti.to_function('OCP',{X0,D,P,X_ref,DT},{X(:,:),U(:,:),S(:,1),Y(:,1)},{'x0','d','p','x_ref','dt'},{'x_opt','u_opt','s_opt','y_opt'});
 end
 
-disp('Casadi builder: OK.')
+disp('Casadi builder D-MPC (nonlinear): OK.')
 
 %%
 function y = g(z,p3)    

@@ -1,4 +1,4 @@
-function [dx] = dynamics_MPC_linear(x,u,d,A,B,E)
+function [dx] = dynamics_MPC_linear(x,u,d,A,B,E,x_OP,u_OP,d_OP)
 % """ Model dynamics description """
 % Continuous dynamics defined in the form: dx/dt = A*x + B*u + E*d
 % 
@@ -11,6 +11,6 @@ function [dx] = dynamics_MPC_linear(x,u,d,A,B,E)
 % Nxt = 2;
 % dx = casadi.MX.zeros(Nxt+ Nxp,1); 
 
-dx = A*x + B*u + E*d;
+dx = A*(x-x_OP) + B*(u-u_OP) + E*(d-d_OP);
     
 end

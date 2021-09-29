@@ -35,7 +35,7 @@ if controlType == 1
     u1_off = 0;%4;
     u2_on = 19.6;     
     u2_off = 0;%5;
-elseif controlType == 2 
+elseif controlType == 2 || 3
     u1_on = 11.2;%11.2;%8.3;                           
     u1_off = 4.5;                         
     u2_on = 19.6;%16;%19.5; %10.5;                        
@@ -50,13 +50,14 @@ max_t2 = 6.3;%6.5;
 min_t2 = 1.5;%1.8;
 
 % Pipe constraints
-if controlType == 2
+if controlType == 2 || 3
     h_p_max = [0.3;0.3;0.3;0.3];
     h_p_min = [0.0001;0.0001;0.0001;0.0001];
 end
 
 %% MPC specs
-Hp = 20;                
+t_step = 20;
+Hp = 10;                
 dt_original = 0.5;
 data_timeUnit = 60;
 dt_MPC = dt_original*t_resample/data_timeUnit;
